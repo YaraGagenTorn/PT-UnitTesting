@@ -36,14 +36,23 @@ public class Coordinates {
         return dist;
     }
     
-    public double companyDistanceTo(Coordinates other) {
-        double xDiff1 = other.getX() - this.getX();
-        double yDiff1 = other.getY() - this.getY();
-        double dist1 = Math.pow((xDiff1 * xDiff1 + yDiff1 * yDiff1),0.5);
-        double xDiff2 = other.getX() - this.getX();
-        double yDiff2 = other.getY() - this.getY();
-        double dist2 = Math.abs(xDiff2) + Math.abs(yDiff2);
-        return (dist1 + dist2)/2;
+//    public double companyDistanceTo(Coordinates other) {
+//        double xDiff1 = other.getX() - this.getX();
+//        double yDiff1 = other.getY() - this.getY();
+//        double dist1 = Math.pow((xDiff1 * xDiff1 + yDiff1 * yDiff1),0.5);
+//        double xDiff2 = other.getX() - this.getX();
+//        double yDiff2 = other.getY() - this.getY();
+//        double dist2 = Math.abs(xDiff2) + Math.abs(yDiff2);
+//        return (dist1 + dist2)/2;
+//    }
+    
+    //changed: use methods
+    
+    public double companyDistanceTo (Coordinates other){
+        double manhattDistance = manhattanDistanceTo (other);
+        double euclideanDistance = euclideanDistanceTo (other);
+        double dist = (manhattDistance+euclideanDistance)/2 +1;
+        return dist;
     }
 
 }

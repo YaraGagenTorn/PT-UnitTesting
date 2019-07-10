@@ -13,10 +13,12 @@ public class Box {
     private static int HeavyCapacity;
     //^^^added parameter Capacity and HeavyCapacity
 
-    public Box(Customer customer, Depot depot) {
+    //added contents to Box parameters vvv 
+    public Box(Customer customer, Depot depot, Manifest contents) {
         this.customer = customer;
         this.depot = depot;
-        contents = new Manifest();
+        //contents = new Manifest();
+        this.contents = new Manifest();
     }
     
     //added method for setting up capacity

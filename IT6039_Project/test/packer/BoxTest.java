@@ -19,29 +19,33 @@ import packer.Depot;
 public class BoxTest {
     
     //Test data
+    Coordinates testCoordinates0 = new Coordinates(0,0);
+    Coordinates testCoordinates1 = new Coordinates(3,4);
     
-    public BoxTest(String testName) {
+    Address testAddress0 = new Address("111 Emerge Rd", "Really", "Inn Town", "D444", testCoordinates0);
+    Address testAddress1 = new Address("1 First St", "Aplace", "Citadel City", "A111", testCoordinates1);
         
-    }
+    Depot testDepot0 = new Depot("Test Depot", testAddress0);
     
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
+    Customer testCustomer0 = new Customer("Test Customer 1", testAddress1);
     
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+    Manifest testContents0 = new Manifest();
+    
+    @BeforeClass
+    public static void setUpClass() {
+        System.out.println("Testing Box class...");
+    }    
+    
     /**
      * Test of setCapacity method, of class Box.
      */
     public void testSetCapacity() {
         System.out.println("setCapacity");
-        int thisBoxCapacity = 0;
-        Box instance = null;
-        instance.setCapacity(thisBoxCapacity);
+        int testCapacity0 = 20;
+        int testCapacity1 = 30;
+        Box testBox0 = new Box(testCustomer0,testDepot0, testContents0);
+        testBox0.setCapacity(testCapacity0);
+        testBox0.setCapacity(testCapacity1);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

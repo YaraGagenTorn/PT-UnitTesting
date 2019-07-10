@@ -11,7 +11,7 @@ public class Box {
     private Depot depot; 
     private static int Capacity;
     private static int HeavyCapacity;
-    //^^^added parameter Capacity
+    //^^^added parameter Capacity and HeavyCapacity
 
     public Box(Customer customer, Depot depot) {
         this.customer = customer;

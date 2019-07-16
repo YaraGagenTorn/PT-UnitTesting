@@ -6,6 +6,7 @@ package packer;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import packer.Address;
 import packer.Coordinates;
@@ -19,179 +20,192 @@ import packer.Depot;
 public class BoxTest {
     
     //Test data
-    Coordinates testCoordinates0 = new Coordinates(0,0);
-    Coordinates testCoordinates1 = new Coordinates(3,4);
+    static Coordinates testCoordinates0 = new Coordinates(0,0);
+    static  Coordinates testCoordinates1 = new Coordinates(3,4);
     
-    Address testAddress0 = new Address("111 Emerge Rd", "Really", "Inn Town", "D444", testCoordinates0);
-    Address testAddress1 = new Address("1 First St", "Aplace", "Citadel City", "A111", testCoordinates1);
+    static Address testAddress0 = new Address("111 Emerge Rd", "Really", "Inn Town", "D444", testCoordinates0);
+    static Address testAddress1 = new Address("1 First St", "Aplace", "Citadel City", "A111", testCoordinates1);
         
-    Depot testDepot0 = new Depot("Test Depot", testAddress0);
+    static Depot testDepot0 = new Depot("Test Depot", testAddress0);
     
-    Customer testCustomer0 = new Customer("Test Customer 1", testAddress1);
+    static Customer testCustomer0 = new Customer("Test Customer 1", testAddress1);
     
-    Manifest testContents0 = new Manifest();
+    static Manifest testContents0 = new Manifest();
+    
+    static Product testProduct0 = new Product("Hammer", 3, false, false);
+    static Product testProduct1 = new Product("Nails", 1, false, false);
+    static Product testProduct2 = new Product("Ladder", 15, false, false);
+    static Product testProduct3 = new Product("Light Bulbs", 1, false, true);
+    static Product testProduct4 = new Product("Weedkiller", 2, true, false);
+    static Product testProduct5 = new Product("VeryHeavyThing", 45, true, false);
+    public Box testBox;
     
     @BeforeClass
     public static void setUpClass() {
         System.out.println("Testing Box class...");
     }    
     
-    /**
-     * Test of setCapacity method, of class Box.
-     */
-    public void testSetCapacity() {
-        System.out.println("setCapacity");
-        int testCapacity0 = 20;
-        int testCapacity1 = 30;
-        Box testBox0 = new Box(testCustomer0,testDepot0, testContents0);
-        testBox0.setCapacity(testCapacity0);
-        testBox0.setCapacity(testCapacity1);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setIfHeavyCapacity method, of class Box.
-     */
-    public void testSetIfHeavyCapacity() {
-        System.out.println("setIfHeavyCapacity");
-        int thisHeavyCapacity = 0;
-        Box instance = null;
-        instance.setIfHeavyCapacity(thisHeavyCapacity);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
+    @Before 
+    public void setUpBox() {
+        System.out.println("Creating a new test box...");
+        testBox = new Box(testCustomer0,testDepot0, 20,15);
+        
+    }   
+     
     /**
      * Test of addProduct method, of class Box.
      */
-    public void testAddProduct_Product() {
+    @Test
+    public void testAddProduct() {
+        System.out.println("-------------------------");
         System.out.println("addProduct");
-        Product product = null;
-        Box instance = null;
-        instance.addProduct(product);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addProduct method, of class Box.
-     */
-    public void testAddProduct_Product_int() {
-        System.out.println("addProduct");
-        Product product = null;
-        int quantity = 0;
-        Box instance = null;
-        instance.addProduct(product, quantity);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+     
+        testBox.addProduct(testProduct0);
+        testBox.addProduct(testProduct1,1);
+        String resultBox = testBox.toString();
+        boolean isTrue = false;
+        isTrue = resultBox.contains ("Hammer") && resultBox.contains ("Nails");
+        assertEquals(true, isTrue);
+        isTrue = true;
+        isTrue = resultBox.contains ("Hammer") && resultBox.contains ("Ladder");
+        assertEquals(false, isTrue);
     }
 
     /**
      * Test of getLabel method, of class Box.
      */
+    //@Test DOESNT WORK!!!!
     public void testGetLabel() {
         System.out.println("getLabel");
-        Box instance = null;
-        String expResult = "";
-        String result = instance.getLabel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("adding products to the box...");
+        testBox.addProduct(testProduct0);
+        testBox.addProduct(testProduct1);
+        testBox.addProduct(testProduct2);
+
+        String testLabel = new String();
+        String testString = new String();
+        testString = testBox.getLabel();
+        System.out.println(testString.toString());
+        
+        //testLabel = "Test Customer 1First St"+ "/n" +"Aplace"+ "/n" +"Citadel City"+ "/n" +"A111"+ "/n" +"Hammer x 1"+ "/n" +"Nails x 1"+ "/n" +"Ladder x 1"; 
+        testLabel = "Test Customer/n 1First St/nAplace/nCitadel City/nA111/nHammer x 1/nNails x 1/nLadder x 1"; 
+        assertEquals(testLabel, testBox.getLabel());
+        
+        
+        
+        /*
+        
+        label.append(customer);
+        label.append("\n");
+        label.append(customer.getClosestAddressTo(depot));
+        label.append("\n");
+        label.append(contents.toString());
+        label.append("\n");
+        if (this.isFragile()) {
+            label.append("FRAGILE\n");
+        }
+        //added if heavy, if hazard
+        if (this.isHazardous()) {
+            label.append("HAZARD\n");
+        }
+        if (this.isHeavy()) {
+            label.append("HEAVY\n");
+        }
+        return label.toString();
+    }*/
+        
+        
+        
+        
+        
+        
     }
 
     /**
      * Test of toString method, of class Box.
      */
+    
     public void testToString() {
         System.out.println("toString");
-        Box instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
      * Test of getWeight method, of class Box.
      */
+    @Test
     public void testGetWeight() {
+        System.out.println("-------------------------");
         System.out.println("getWeight");
-        Box instance = null;
-        double expResult = 0.0;
-        double result = instance.getWeight();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("adding products to the box...");
+        testBox.addProduct(testProduct0,1);
+        testBox.addProduct(testProduct1,1);
+        testBox.addProduct(testProduct2,1);
+        assertEquals(19, testBox.getWeight(),0);
+        setUpBox();
+        System.out.println("adding products to the box...");
+        testBox.addProduct(testProduct0,1);
+        testBox.addProduct(testProduct1,2);
+        testBox.addProduct(testProduct2,1);
+        assertEquals(20, testBox.getWeight(),0);
+        
     }
 
     /**
      * Test of canFit method, of class Box.
      */
-    public void testCanFit_Product() {
+    @Test
+    public void testCanFit() {
+        System.out.println("-------------------------");
         System.out.println("canFit");
-        Product p = null;
-        Box instance = null;
-        boolean expResult = false;
-        boolean result = instance.canFit(p);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of canFit method, of class Box.
-     */
-    public void testCanFit_Product_int() {
-        System.out.println("canFit");
-        Product p = null;
-        int quantity = 0;
-        Box instance = null;
-        boolean expResult = false;
-        boolean result = instance.canFit(p, quantity);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue (testBox.canFit(testProduct0));
+        assertFalse (testBox.canFit(testProduct5));
     }
 
     /**
      * Test of remainingCapacity method, of class Box.
      */
+    @Test
     public void testRemainingCapacity() {
+        System.out.println("-------------------------");
         System.out.println("remainingCapacity");
-        Box instance = null;
-        double expResult = 0.0;
-        double result = instance.remainingCapacity();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("adding products to the box...");
+        testBox.addProduct(testProduct0,1);
+        testBox.addProduct(testProduct1,1);
+        testBox.addProduct(testProduct2,1);
+        assertEquals(1,testBox.remainingCapacity(),0);
+        setUpBox();
+        System.out.println("adding products to the box...");
+        testBox.addProduct(testProduct0,1);
+        testBox.addProduct(testProduct1,2);
+        assertEquals(15,testBox.remainingCapacity(),0);
     }
 
     /**
      * Test of isFragile method, of class Box.
      */
+    @Test
     public void testIsFragile() {
+        System.out.println("-------------------------");
         System.out.println("isFragile");
-        Box instance = null;
-        boolean expResult = false;
-        boolean result = instance.isFragile();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        testBox.addProduct(testProduct0,1);
+        testBox.addProduct(testProduct1,1);
+        testBox.addProduct(testProduct2,1);
+        assertFalse(testBox.isFragile());
+        setUpBox();
+        System.out.println("adding products to the box...");
+        testBox.addProduct(testProduct0,1);
+        testBox.addProduct(testProduct3,2);
+        assertTrue(testBox.isFragile());
     }
 
     /**
      * Test of isHazardous method, of class Box.
      */
+    @Test
     public void testIsHazardous() {
         System.out.println("isHazardous");
-        Box instance = null;
-        boolean expResult = false;
-        boolean result = instance.isHazardous();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**

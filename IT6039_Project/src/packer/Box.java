@@ -9,26 +9,18 @@ public class Box {
     private Manifest contents;
     private Customer customer;
     private Depot depot; 
-    private static int Capacity;
-    private static int HeavyCapacity;
-    //^^^added parameter Capacity and HeavyCapacity
+    private static int capacity;
+    private static int heavyCapacity;
+    //^^^added parameter capacity and heavyCapacity
 
     //added contents to Box parameters vvv 
-    public Box(Customer customer, Depot depot, Manifest contents) {
+    public Box(Customer customer, Depot depot, int capacity, int heavyCapacity) {
         this.customer = customer;
         this.depot = depot;
-        //contents = new Manifest();
-        this.contents = new Manifest();
-    }
-    
-    //added method for setting up capacity
-    public void setCapacity(int thisBoxCapacity){
-        Capacity = thisBoxCapacity;
-    }
-    
-    //added method for setting up HEAVY capacity
-    public void setIfHeavyCapacity(int thisHeavyCapacity){
-        HeavyCapacity = thisHeavyCapacity;
+        this.capacity = capacity;
+        this.heavyCapacity = heavyCapacity;
+        contents = new Manifest();
+        
     }
     
     public void addProduct(Product product) {
@@ -46,20 +38,20 @@ public class Box {
     public String getLabel() {
         StringBuilder label = new StringBuilder();
         label.append(customer);
-        label.append("\n");
+        label.append(" \n");
         label.append(customer.getClosestAddressTo(depot));
-        label.append("\n");
+        label.append(" \n");
         label.append(contents.toString());
-        label.append("\n");
+        label.append(" \n");
         if (this.isFragile()) {
-            label.append("FRAGILE\n");
+            label.append(" FRAGILE\n");
         }
         //added if heavy, if hazard
         if (this.isHazardous()) {
-            label.append("HAZARD\n");
+            label.append(" HAZARD\n");
         }
         if (this.isHeavy()) {
-            label.append("HEAVY\n");
+            label.append(" HEAVY\n");
         }
         return label.toString();
     }
@@ -85,18 +77,18 @@ public class Box {
     
     public boolean canFit(Product p) {
         //return p.getWeight() < 40;
-        return p.getWeight() < Capacity;
+        return p.getWeight() < capacity;
         
     }
     
     public boolean canFit(Product p, int quantity) {
         //return (p.getWeight() * quantity) < 40;
-        return (p.getWeight() * quantity) < Capacity;
+        return (p.getWeight() * quantity) < capacity;
     }
     
     public double remainingCapacity() {
         //return 40 - this.getWeight();
-        return Capacity - this.getWeight();
+        return capacity - this.getWeight();
     }
     
     public boolean isFragile() {
@@ -109,7 +101,7 @@ public class Box {
     
     //added method if box is heavy
     public boolean isHeavy(){
-        if (this.getWeight() > HeavyCapacity) {return true;}
+        if (this.getWeight() > heavyCapacity) {return true;}
         else {return false;}
     }
     

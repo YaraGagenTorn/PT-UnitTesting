@@ -4,6 +4,7 @@
  */
 package packer;
 
+import java.util.HashMap;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -13,6 +14,7 @@ import static packer.BoxTest.testCustomer0;
 import packer.Coordinates;
 import packer.Customer;
 import packer.Depot;
+import java.util.Map;
 
 /**
  *
@@ -53,16 +55,21 @@ public class ManifestTest {
         testManifest.addProduct(testProduct0);
         testManifest.addProduct(testProduct1,2);
         testManifest.addProduct(testProduct2);
-        String testString = "Hammer x 1"+ "\n"+ "Nails x 2"+ "\n"+ "Ladder x 1";
-        assertTrue(testString.equals(testManifest.toString()));
-        setUpManifest();
+        Map<Product, Integer> testQuantities;
+        testQuantities = new HashMap<>(); 
+        testQuantities.put(testProduct0,1);
+        testQuantities.put(testProduct1,2);
+        testQuantities.put(testProduct2,1);
+        //String testString = "Hammer x 1"+ "\n"+ "Nails x 2"+ "\n"+ "Ladder x 1";
+        assertTrue(testQuantities.equals(testManifest));
+        /*setUpManifest();
         testString = "";
         testManifest.addProduct(testProduct3,3);
         testManifest.addProduct(testProduct4,2);
         testManifest.addProduct(testProduct5,4);
-        testString = "Light Bulbs x 3"+ "\n"+ "Weedkiller x 2" +"\n"+"VeryHeavyThing x 4";
-        //System.out.println(testManifest.toString());
-        assertTrue(testString.equals(testManifest.toString()));
+        testString = "Weedkiller x 2" +"\n"+ "VeryHeavyThing x 4"+ "\n"+"Light Bulbs x 3";
+        System.out.println(testManifest.toString());
+        assertTrue(testString.equals(testManifest.toString()));*/
     }
 
     /**
@@ -106,49 +113,57 @@ public class ManifestTest {
         System.out.println("-------------------------");
         System.out.println("getHeaviestUnder");
         testManifest.addProduct(testProduct0);
-        testManifest.addProduct(testProduct1,2);
+        testManifest.addProduct(testProduct1);
         testManifest.addProduct(testProduct2);
-        
+        String testResult = testManifest.getHeaviestUnder(5).toString();
+        assertTrue(testResult.equals(testProduct0.toString()));
+        testResult = testManifest.getHeaviestUnder(16).toString();
+        assertTrue(testResult.equals(testProduct2.toString()));
+        Product testResultProduct = testManifest.getHeaviestUnder(0.5);
+        assertTrue (testResultProduct == null);
     }
 
     /**
      * Test of isEmpty method, of class Manifest.
      */
+    @Test
     public void testIsEmpty() {
+        System.out.println("-------------------------");
         System.out.println("isEmpty");
-        Manifest instance = new Manifest();
-        boolean expResult = false;
-        boolean result = instance.isEmpty();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(testManifest.isEmpty());
+        testManifest.addProduct(testProduct0);
+        assertFalse(testManifest.isEmpty());
     }
 
     /**
      * Test of containsProduct method, of class Manifest.
      */
+    @Test
     public void testContainsProduct() {
+        System.out.println("-------------------------");
         System.out.println("containsProduct");
-        Product p = null;
-        Manifest instance = new Manifest();
-        boolean expResult = false;
-        boolean result = instance.containsProduct(p);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        testManifest.addProduct(testProduct0);
+        testManifest.addProduct(testProduct1);
+        testManifest.addProduct(testProduct2);
+        assertTrue(testManifest.containsProduct(testProduct0));
+        assertFalse(testManifest.containsProduct(testProduct3));
     }
 
     /**
      * Test of toString method, of class Manifest.
      */
+    @Test
     public void testToString() {
+        System.out.println("-------------------------");
         System.out.println("toString");
-        Manifest instance = new Manifest();
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        testManifest.addProduct(testProduct0);
+        testManifest.addProduct(testProduct1);
+        testManifest.addProduct(testProduct2);
+        String testString ="Hammer x 1\n" + "Nails x 1\n" + "Ladder x 1";
+        assertTrue (testString.equals(testManifest.toString()));
+        testManifest.addProduct(testProduct3);
+        testString = "Hammer x 1\n" + "Nails x 1\n" + "Ladder x 1\n" + "Light Bulbs x 1\n";
+        assertTrue (testString.equals(testManifest.toString()));
     }
 
     /**

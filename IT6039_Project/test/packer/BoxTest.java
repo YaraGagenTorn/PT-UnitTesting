@@ -204,21 +204,36 @@ public class BoxTest {
      */
     @Test
     public void testIsHazardous() {
+        System.out.println("-------------------------");
         System.out.println("isHazardous");
+        testBox.addProduct(testProduct0,1);
+        testBox.addProduct(testProduct1,1);
+        testBox.addProduct(testProduct2,1);
+        assertFalse(testBox.isHazardous());
+        setUpBox();
+        System.out.println("adding products to the box...");
+        testBox.addProduct(testProduct4,1);
+        testBox.addProduct(testProduct3,2);
+        assertTrue(testBox.isHazardous());
         
     }
 
     /**
      * Test of isHeavy method, of class Box.
      */
+    @Test
     public void testIsHeavy() {
+        System.out.println("-------------------------");
         System.out.println("isHeavy");
-        Box instance = null;
-        boolean expResult = false;
-        boolean result = instance.isHeavy();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        testBox.addProduct(testProduct0,1);
+        testBox.addProduct(testProduct1,1);
+        testBox.addProduct(testProduct3,1);
+        assertFalse(testBox.isHeavy());
+        setUpBox();
+        System.out.println("adding products to the box...");
+        testBox.addProduct(testProduct4,1);
+        testBox.addProduct(testProduct2,1);
+        assertTrue(testBox.isHeavy());
+      }
     
 }

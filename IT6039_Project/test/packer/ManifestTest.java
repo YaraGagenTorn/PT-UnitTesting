@@ -1,14 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * MY TEST
+ * 
  */
 package packer;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import packer.Address;
+import static packer.BoxTest.testCustomer0;
 import packer.Coordinates;
 import packer.Customer;
 import packer.Depot;
@@ -17,78 +18,97 @@ import packer.Depot;
  *
  * @author 90053232
  */
+
 public class ManifestTest {
+
+    //Test data
+    static Product testProduct0 = new Product("Hammer", 3, false, false);
+    static Product testProduct1 = new Product("Nails", 1, false, false);
+    static Product testProduct2 = new Product("Ladder", 15, false, false);
+    static Product testProduct3 = new Product("Light Bulbs", 1, false, true);
+    static Product testProduct4 = new Product("Weedkiller", 2, true, false);
+    static Product testProduct5 = new Product("VeryHeavyThing", 45, true, false);
+
+    Manifest testManifest;
+             
+    @BeforeClass
+    public static void setUpClass() {
+        System.out.println("Testing Manifest class...");
+    }    
     
-      
-    
-    protected void setUp() throws Exception {
-    }
-    
-    protected void tearDown() throws Exception {
-    }
+    @Before 
+    public void setUpManifest() {
+        System.out.println("Creating a new test manifest...");
+        testManifest = new Manifest();
+    }   
 
     /**
      * Test of addProduct method, of class Manifest.
      */
-    public void testAddProduct_Product() {
+    
+    @Test
+    public void testAddProduct() {
+        System.out.println("-------------------------");
         System.out.println("addProduct");
-        Product p = null;
-        Manifest instance = new Manifest();
-        instance.addProduct(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addProduct method, of class Manifest.
-     */
-    public void testAddProduct_Product_int() {
-        System.out.println("addProduct");
-        Product p = null;
-        int quantity = 0;
-        Manifest instance = new Manifest();
-        instance.addProduct(p, quantity);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        testManifest.addProduct(testProduct0);
+        testManifest.addProduct(testProduct1,2);
+        testManifest.addProduct(testProduct2);
+        String testString = "Hammer x 1"+ "\n"+ "Nails x 2"+ "\n"+ "Ladder x 1";
+        assertTrue(testString.equals(testManifest.toString()));
+        setUpManifest();
+        testString = "";
+        testManifest.addProduct(testProduct3,3);
+        testManifest.addProduct(testProduct4,2);
+        testManifest.addProduct(testProduct5,4);
+        testString = "Light Bulbs x 3"+ "\n"+ "Weedkiller x 2" +"\n"+"VeryHeavyThing x 4";
+        //System.out.println(testManifest.toString());
+        assertTrue(testString.equals(testManifest.toString()));
     }
 
     /**
      * Test of removeProduct method, of class Manifest.
      */
+    @Test
     public void testRemoveProduct() {
+        System.out.println("-------------------------");
         System.out.println("removeProduct");
-        Product p = null;
-        Manifest instance = new Manifest();
-        instance.removeProduct(p);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        testManifest.addProduct(testProduct0);
+        testManifest.addProduct(testProduct1,2);
+        testManifest.addProduct(testProduct2);
+        testManifest.removeProduct(testProduct0);
+        String testString = "Nails x 2"+ "\n" + "Ladder x 1"; 
+        assertTrue(testString.equals(testManifest.toString()));
     }
 
     /**
      * Test of getTotalWeight method, of class Manifest.
      */
+    @Test
     public void testGetTotalWeight() {
+        System.out.println("-------------------------");
         System.out.println("getTotalWeight");
-        Manifest instance = new Manifest();
-        double expResult = 0.0;
-        double result = instance.getTotalWeight();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        testManifest.addProduct(testProduct0);
+        testManifest.addProduct(testProduct1,2);
+        testManifest.addProduct(testProduct2);
+        assertEquals(20, testManifest.getTotalWeight(),0);
+        setUpManifest();
+        testManifest.addProduct(testProduct1,3);
+        testManifest.addProduct(testProduct3,5);
+        testManifest.addProduct(testProduct4,2);
+        assertEquals(12, testManifest.getTotalWeight(),0);
+     }
 
     /**
      * Test of getHeaviestUnder method, of class Manifest.
      */
+    @Test
     public void testGetHeaviestUnder() {
+        System.out.println("-------------------------");
         System.out.println("getHeaviestUnder");
-        double weight = 0.0;
-        Manifest instance = new Manifest();
-        Product expResult = null;
-        Product result = instance.getHeaviestUnder(weight);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        testManifest.addProduct(testProduct0);
+        testManifest.addProduct(testProduct1,2);
+        testManifest.addProduct(testProduct2);
+        
     }
 
     /**

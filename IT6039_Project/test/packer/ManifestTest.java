@@ -15,6 +15,7 @@ import packer.Coordinates;
 import packer.Customer;
 import packer.Depot;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -55,21 +56,15 @@ public class ManifestTest {
         testManifest.addProduct(testProduct0);
         testManifest.addProduct(testProduct1,2);
         testManifest.addProduct(testProduct2);
-        Map<Product, Integer> testQuantities;
-        testQuantities = new HashMap<>(); 
-        testQuantities.put(testProduct0,1);
-        testQuantities.put(testProduct1,2);
-        testQuantities.put(testProduct2,1);
-        //String testString = "Hammer x 1"+ "\n"+ "Nails x 2"+ "\n"+ "Ladder x 1";
-        assertTrue(testQuantities.equals(testManifest));
-        /*setUpManifest();
-        testString = "";
-        testManifest.addProduct(testProduct3,3);
-        testManifest.addProduct(testProduct4,2);
-        testManifest.addProduct(testProduct5,4);
-        testString = "Weedkiller x 2" +"\n"+ "VeryHeavyThing x 4"+ "\n"+"Light Bulbs x 3";
-        System.out.println(testManifest.toString());
-        assertTrue(testString.equals(testManifest.toString()));*/
+        
+        String stringForTest = testManifest.toString();
+        stringForTest = stringForTest.replace("Hammer x 1","");
+        stringForTest = stringForTest.replace("Nails x 2","");
+        stringForTest = stringForTest.replace("Ladder x 1","");
+        stringForTest = stringForTest.replace("\n","");
+        System.out.println(stringForTest);
+        assertTrue(stringForTest.equals(""));
+     
     }
 
     /**
@@ -83,8 +78,18 @@ public class ManifestTest {
         testManifest.addProduct(testProduct1,2);
         testManifest.addProduct(testProduct2);
         testManifest.removeProduct(testProduct0);
-        String testString = "Nails x 2"+ "\n" + "Ladder x 1"; 
-        assertTrue(testString.equals(testManifest.toString()));
+        
+        String stringForTest = testManifest.toString();
+        //stringForTest = stringForTest.replace("Hammer x 1","");
+        stringForTest = stringForTest.replace("Nails x 2","");
+        stringForTest = stringForTest.replace("Ladder x 1","");
+        stringForTest = stringForTest.replace("\n","");
+        assertTrue(stringForTest.equals(""));
+        
+        stringForTest = testManifest.toString();
+        stringForTest = stringForTest.replace("Nails x 2","");
+        stringForTest = stringForTest.replace("\n","");
+        assertFalse(stringForTest.equals(""));
     }
 
     /**
@@ -156,40 +161,57 @@ public class ManifestTest {
     public void testToString() {
         System.out.println("-------------------------");
         System.out.println("toString");
+        
         testManifest.addProduct(testProduct0);
         testManifest.addProduct(testProduct1);
         testManifest.addProduct(testProduct2);
-        String testString ="Hammer x 1\n" + "Nails x 1\n" + "Ladder x 1";
-        assertTrue (testString.equals(testManifest.toString()));
-        testManifest.addProduct(testProduct3);
-        testString = "Hammer x 1\n" + "Nails x 1\n" + "Ladder x 1\n" + "Light Bulbs x 1\n";
-        assertTrue (testString.equals(testManifest.toString()));
+        
+       String stringForTest = testManifest.toString();
+        stringForTest = stringForTest.replace("Hammer x 1","");
+        stringForTest = stringForTest.replace("Nails x 1","");
+        stringForTest = stringForTest.replace("Ladder x 1","");
+        stringForTest = stringForTest.replace("\n","");
+        assertTrue(stringForTest.equals(""));
+        
     }
 
     /**
      * Test of hasFragileItems method, of class Manifest.
      */
+    @Test
     public void testHasFragileItems() {
+        System.out.println("-------------------------");
         System.out.println("hasFragileItems");
-        Manifest instance = new Manifest();
-        boolean expResult = false;
-        boolean result = instance.hasFragileItems();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        testManifest.addProduct(testProduct0);
+        testManifest.addProduct(testProduct1);
+        testManifest.addProduct(testProduct3);
+        assertTrue(testManifest.hasFragileItems());
+        
+        setUpManifest();
+        testManifest.addProduct(testProduct0);
+        testManifest.addProduct(testProduct1);
+        assertFalse(testManifest.hasFragileItems());
     }
 
     /**
      * Test of hasHazardousItems method, of class Manifest.
      */
+    @Test
     public void testHasHazardousItems() {
+        System.out.println("-------------------------");
         System.out.println("hasHazardousItems");
-        Manifest instance = new Manifest();
-        boolean expResult = false;
-        boolean result = instance.hasHazardousItems();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        testManifest.addProduct(testProduct0);
+        testManifest.addProduct(testProduct1);
+        testManifest.addProduct(testProduct4);
+        assertTrue(testManifest.hasHazardousItems());
+        
+        setUpManifest();
+        testManifest.addProduct(testProduct0);
+        testManifest.addProduct(testProduct1);
+        assertFalse(testManifest.hasHazardousItems());
+        
+        setUpManifest();
+        assertFalse(testManifest.hasHazardousItems());
     }
     
 }

@@ -8,10 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import packer.Address;
-import packer.Coordinates;
-import packer.Customer;
-import packer.Depot;
+
 
 /**
  *
@@ -69,12 +66,13 @@ public class BoxTest {
         isTrue = true;
         isTrue = resultBox.contains ("Hammer") && resultBox.contains ("Ladder");
         assertEquals(false, isTrue);
+        
     }
 
     /**
      * Test of getLabel method, of class Box.
      */
-    //@Test DOESNT WORK!!!!
+    
     public void testGetLabel() {
         System.out.println("getLabel");
         System.out.println("adding products to the box...");
@@ -87,37 +85,8 @@ public class BoxTest {
         testString = testBox.getLabel();
         System.out.println(testString.toString());
         
-        //testLabel = "Test Customer 1First St"+ "/n" +"Aplace"+ "/n" +"Citadel City"+ "/n" +"A111"+ "/n" +"Hammer x 1"+ "/n" +"Nails x 1"+ "/n" +"Ladder x 1"; 
         testLabel = "Test Customer/n 1First St/nAplace/nCitadel City/nA111/nHammer x 1/nNails x 1/nLadder x 1"; 
         assertEquals(testLabel, testBox.getLabel());
-        
-        
-        
-        /*
-        
-        label.append(customer);
-        label.append("\n");
-        label.append(customer.getClosestAddressTo(depot));
-        label.append("\n");
-        label.append(contents.toString());
-        label.append("\n");
-        if (this.isFragile()) {
-            label.append("FRAGILE\n");
-        }
-        //added if heavy, if hazard
-        if (this.isHazardous()) {
-            label.append("HAZARD\n");
-        }
-        if (this.isHeavy()) {
-            label.append("HEAVY\n");
-        }
-        return label.toString();
-    }*/
-        
-        
-        
-        
-        
         
     }
 

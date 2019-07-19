@@ -63,7 +63,7 @@ public class ManifestTest {
         stringForTest = stringForTest.replace("Ladder x 1","");
         stringForTest = stringForTest.replace("\n","");
         System.out.println(stringForTest);
-        assertTrue(stringForTest.equals(""));
+        assertTrue(stringForTest.equals("")); 
      
     }
 
@@ -72,6 +72,7 @@ public class ManifestTest {
      */
     @Test
     public void testRemoveProduct() {
+        System.out.println("-------------------------");
         System.out.println("-------------------------");
         System.out.println("removeProduct");
         testManifest.addProduct(testProduct0);

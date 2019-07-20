@@ -85,13 +85,14 @@ public class Manifest {
     
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (Product p : quantities.keySet()) {
+        for (Product p : byWeight) {
             result.append(p.getName());
             result.append(" x ");
             result.append(quantities.get(p));
             result.append("\n");
         }
         return result.substring(0, result.length()-1);
+
     }
     
     public boolean hasFragileItems() {
@@ -113,7 +114,9 @@ public class Manifest {
         return false;
     }
     
-//added method if box is heavy
+//added method to get quantities for test purposes
+    public Map<Product, Integer>  getQuantities(){
+    return quantities; }
     
     
     

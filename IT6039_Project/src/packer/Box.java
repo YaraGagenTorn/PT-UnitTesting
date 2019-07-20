@@ -105,4 +105,11 @@ public class Box {
         else {return false;}
     }
     
+    //added method for test purposes vvv
+    public Manifest getContent(){
+        return contents;
+    }
+    
+    public int getCapacity(){
+    return capacity;}
 }

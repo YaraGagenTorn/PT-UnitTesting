@@ -5,7 +5,9 @@
 package packer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -29,12 +31,14 @@ public class PackerTest {
     static Product testProduct5 = new Product("VeryHeavyThing", 45, true, false);
     
     Manifest testManifest;
-    
+    Manifest testImmutableManifest;
     Address testDepotAddress = new Address("23 Good Luck St", "Blue View", "Sandy Shores", "H337", new Coordinates(138, 995));
     Depot testDepot = new Depot("Main Depot", testDepotAddress);
     
     Address testCustomerAddress = new Address("67 Torch Rd", "Treeline", "Mt High", "T799", new Coordinates(1102, 87));
     Customer testCustomer = new Customer("Andy Bravo", testCustomerAddress);
+    
+    Box testBox;
     
     @BeforeClass
     public static void setUpClass() {
@@ -51,6 +55,15 @@ public class PackerTest {
         testManifest.addProduct(new Product("Saw", 5, false, false), 1);
         testManifest.addProduct(new Product("Light Bulbs", 1, false, true), 20);
         testManifest.addProduct(new Product("Weedkiller", 2, true, false), 1);
+        
+        testImmutableManifest = new Manifest();
+        testImmutableManifest.addProduct(new Product("Hammer", 3, false, false), 1);
+        testImmutableManifest.addProduct(new Product("Nails", 1, false, false), 12);
+        testImmutableManifest.addProduct(new Product("Ladder", 15, false, false), 2);
+        testImmutableManifest.addProduct(new Product("Saw", 5, false, false), 1);
+        testImmutableManifest.addProduct(new Product("Light Bulbs", 1, false, true), 20);
+        testImmutableManifest.addProduct(new Product("Weedkiller", 2, true, false), 1);
+
     }   
 
     /**
@@ -62,8 +75,33 @@ public class PackerTest {
         
         List<Box> testListOfBox = new ArrayList<>();
         testListOfBox = Packer.packProducts(testCustomer,testDepot,testManifest);
-        for (Box b : testListOfBox) {
-            System.out.println(b);
-        }
+        
+        String testString;
+        Map<String, Integer> testQuantities;
+        testQuantities = new HashMap<>();
+        
+        Manifest testAllBoxManifest = new Manifest();
+        boolean testWeightIsOk = false;
+
+        String finalTestString = new String();
+         for (Box b : testListOfBox) {
+             if (b.getWeight()< b.getCapacity()){
+             testWeightIsOk = true;
+             }
+             
+             for (Product p : b.getContent().getQuantities().keySet()){
+                testAllBoxManifest.addProduct(p, b.getContent().getQuantities().get(p));
+                         System.out.println(p.getName());
+
+             }
+            }
+         System.out.println(testAllBoxManifest);
+         System.out.println("__________________");
+         System.out.println(testImmutableManifest);
+
+         assert testAllBoxManifest.toString().equals(testImmutableManifest.toString());
+         
+         
+        
     }
 }

@@ -101,9 +101,9 @@ public class ManifestTest {
         System.out.println("-------------------------");
         System.out.println("getTotalWeight");
         testManifest.addProduct(testProduct0);
-        testManifest.addProduct(testProduct1,2);
+        testManifest.addProduct(testProduct1);
         testManifest.addProduct(testProduct2);
-        assertEquals(20, testManifest.getTotalWeight(),0);
+        assertEquals(19, testManifest.getTotalWeight(),0);
         setUpManifest();
         testManifest.addProduct(testProduct1,3);
         testManifest.addProduct(testProduct3,5);
